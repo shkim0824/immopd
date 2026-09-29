@@ -1,0 +1,20 @@
+# Two-domain IM-MOPD (Medical, IF): uniform initialization (0.5, 0.5), one correction after update 100 of 200.
+_base_: ../mopd/2dom_medif_r20.yaml
+model:
+  student: ${MODEL_DIR}/merge-medif-r50
+train:
+  output: ${RUN_DIR}/immopd/2dom_medif
+immopd:
+  steps: [100]
+  gamma: 0.6
+  delta: 0.3
+  base: ${MODEL_DIR}/Qwen3-4B-OT3
+  teachers:
+    med: ${MODEL_DIR}/teacher-med-4b
+    if: ${MODEL_DIR}/teacher-if-4b
+  refs: data/validation/refs_4b.json
+  validation:
+    pool: data/validation/pool.jsonl
+    tau2_tasks: ''
+    domains: [med, if]
+    n_samples: 4

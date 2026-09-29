@@ -1,0 +1,25 @@
+# MOPD from the reference model (4B): 100 updates, 128 prompts per update, uniform domain sampling.
+model:
+  student: ${MODEL_DIR}/Qwen3-4B-OT3
+teachers:
+  endpoints_file: ''
+data:
+  paths:
+    tau: ${DATA_DIR}/pools/tau_train.jsonl
+    med: ${DATA_DIR}/pools/med_train.jsonl
+    law: ${DATA_DIR}/pools/law_train.jsonl
+    fin: ${DATA_DIR}/pools/fin_train.jsonl
+    if: ${DATA_DIR}/pools/if_train.jsonl
+  seed: 42
+distill:
+  a_max: 5.0
+train:
+  max_steps: 100
+  batch_size: 128
+  lr: 1.0e-6
+  max_completion_length: 16384
+  temperature: 1.0
+  top_p: 1.0
+  mask_truncated_completions: true
+  save_steps: 25
+  output: ${RUN_DIR}/mopd/qwen3-4b_base

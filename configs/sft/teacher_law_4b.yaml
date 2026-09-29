@@ -1,0 +1,13 @@
+# Law teacher (SFT): batch 128, length 20,480, peak LR 1e-5.
+model:
+  base: ${MODEL_DIR}/Qwen3-4B-OT3
+data:
+  sources:
+    law: ${DATA_DIR}/sft/law_sft.jsonl
+  max_len: 20480
+train:
+  output: ${MODEL_DIR}/teacher-law-4b
+  epochs: 2.0
+  lr: 1.0e-5
+  batch_size: 128
+  save_strategy: epoch

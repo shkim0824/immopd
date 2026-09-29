@@ -1,0 +1,6 @@
+# Table 2, all at initialization: Med 0.5, Law 0.5, Fin 0.2, IF 0.5, Tool 1.1.
+_base_: qwen3-4b_base.yaml
+model:
+  student: ${MODEL_DIR}/merge-4b-at-init
+train:
+  output: ${RUN_DIR}/mopd/qwen3-4b_merge-at-init

@@ -1,0 +1,6 @@
+# MOPD from the uniform merge (1.7B).
+_base_: qwen3-4b_base.yaml
+model:
+  student: ${MODEL_DIR}/merge-1p7b-uniform
+train:
+  output: ${RUN_DIR}/mopd/qwen3-1p7b_uniform-merge

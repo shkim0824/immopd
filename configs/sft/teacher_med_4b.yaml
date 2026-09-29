@@ -1,0 +1,13 @@
+# Medical teacher (SFT): batch 16, length 8,192, peak LR 1e-5.
+model:
+  base: ${MODEL_DIR}/Qwen3-4B-OT3
+data:
+  sources:
+    med: ${DATA_DIR}/sft/med_sft.jsonl
+  max_len: 8192
+train:
+  output: ${MODEL_DIR}/teacher-med-4b
+  epochs: 4.0
+  lr: 1.0e-5
+  batch_size: 16
+  save_strategy: epoch

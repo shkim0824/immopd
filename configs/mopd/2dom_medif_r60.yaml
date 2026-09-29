@@ -1,0 +1,6 @@
+# Two-domain MOPD (Medical, IF) from the merge with coefficients (0.6, 0.4).
+_base_: 2dom_medif_r20.yaml
+model:
+  student: ${MODEL_DIR}/merge-medif-r60
+train:
+  output: ${RUN_DIR}/mopd/2dom_medif_r60

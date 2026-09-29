@@ -1,0 +1,6 @@
+# MOPD from the non-uniform merge normalized to sum to one: Med 0.24, Law 0.14, Fin 0.10, IF 0.14, Tool 0.38.
+_base_: qwen3-4b_base.yaml
+model:
+  student: ${MODEL_DIR}/merge-4b-normalized
+train:
+  output: ${RUN_DIR}/mopd/qwen3-4b_merge-normalized

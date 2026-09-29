@@ -1,0 +1,5 @@
+_base_: teacher_med_4b.yaml
+model:
+  base: ${MODEL_DIR}/Qwen3-1.7B-OT3
+train:
+  output: ${MODEL_DIR}/teacher-med-1p7b

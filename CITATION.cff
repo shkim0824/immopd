@@ -1,0 +1,33 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite the paper."
+title: "No Pain, More Gain: Iterative Merging for Effective Multi-Teacher On-Policy Distillation"
+type: software
+authors:
+  - family-names: Kim
+    given-names: Seonghyeon
+  - family-names: Jang
+    given-names: Chaeyun
+  - family-names: Lee
+    given-names: Noah
+  - family-names: Kim
+    given-names: Boseop
+  - family-names: Lee
+    given-names: Juho
+url: "https://github.com/shkim0824/immopd"
+preferred-citation:
+  type: article
+  title: "No Pain, More Gain: Iterative Merging for Effective Multi-Teacher On-Policy Distillation"
+  authors:
+    - family-names: Kim
+      given-names: Seonghyeon
+    - family-names: Jang
+      given-names: Chaeyun
+    - family-names: Lee
+      given-names: Noah
+    - family-names: Kim
+      given-names: Boseop
+    - family-names: Lee
+      given-names: Juho
+  journal: "arXiv preprint arXiv:2609.34745"
+  year: 2026
+  url: "https://arxiv.org/abs/2609.34745"

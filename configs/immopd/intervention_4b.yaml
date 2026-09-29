@@ -1,0 +1,16 @@
+# Figure 3a: merge intervention at update 50 of the scaled-merge MOPD run, then 50 more updates.
+# Start from a copy of checkpoint-50 of configs/mopd/qwen3-4b_merge-scaled.yaml in the output directory.
+_base_: ../mopd/qwen3-4b_merge-scaled.yaml
+train:
+  output: ${RUN_DIR}/immopd/intervention_4b
+immopd:
+  steps: [50]
+  base: ${MODEL_DIR}/Qwen3-4B-OT3
+  teachers:
+    tau: ${MODEL_DIR}/teacher-tau-4b
+    med: ${MODEL_DIR}/teacher-med-4b
+    law: ${MODEL_DIR}/teacher-law-4b
+    fin: ${MODEL_DIR}/teacher-fin-4b
+    if: ${MODEL_DIR}/teacher-if-4b
+  plan:
+    50: "tau=0.3,med=0.2,law=0.1,if=0.2"

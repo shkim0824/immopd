@@ -1,0 +1,6 @@
+# MOPD from the SFT warm-up checkpoint (1.7B).
+_base_: qwen3-4b_base.yaml
+model:
+  student: ${MODEL_DIR}/warmup-1p7b
+train:
+  output: ${RUN_DIR}/mopd/qwen3-1p7b_sft-warmup

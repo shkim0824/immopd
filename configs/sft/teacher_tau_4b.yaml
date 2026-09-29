@@ -1,0 +1,15 @@
+# Tool Use teacher (SFT): batch 64, length 32,768, peak LR 5e-6, 10% learning-rate floor.
+model:
+  base: ${MODEL_DIR}/Qwen3-4B-OT3
+data:
+  sources:
+    tau: ${DATA_DIR}/sft/tau2_sft.jsonl
+  max_len: 32768
+train:
+  output: ${MODEL_DIR}/teacher-tau-4b
+  epochs: 3.0
+  lr: 5.0e-6
+  scheduler: cosine_with_min_lr
+  scheduler_kwargs: {min_lr_rate: 0.1}
+  batch_size: 64
+  save_strategy: epoch

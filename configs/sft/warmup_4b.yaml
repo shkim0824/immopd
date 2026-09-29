@@ -1,0 +1,16 @@
+# SFT warm-up baseline (4B): batch 32, length 32,768, peak LR 1e-5, 167M tokens.
+# Mix (million tokens): law 2.2, med 62, tau 100, fin 0.36, if 0.14.
+model:
+  base: ${MODEL_DIR}/Qwen3-4B-OT3
+data:
+  sources:
+    mix: ${DATA_DIR}/sft/warmup_4b.jsonl
+  max_len: 32768
+train:
+  output: ${MODEL_DIR}/warmup-4b
+  epochs: 100.0
+  max_steps: 160
+  lr: 1.0e-5
+  batch_size: 32
+  logging_steps: 1
+  save_steps: 40

@@ -1,0 +1,6 @@
+# MOPD from the uniform merge at scale lambda = 2.1 (coefficient 0.42 per teacher).
+_base_: qwen3-4b_base.yaml
+model:
+  student: ${MODEL_DIR}/merge-4b-scaled-uniform
+train:
+  output: ${RUN_DIR}/mopd/qwen3-4b_merge-scaled-uniform

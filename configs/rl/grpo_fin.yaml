@@ -1,0 +1,126 @@
+# Finance teacher (GRPO): 32 prompts x 8 completions, length 16,384, LR 3e-6. SIZE = 4B or 1.7B.
+defaults: ${NEMO_RL_REPO}/examples/configs/grpo_math_1B.yaml
+
+grpo:
+  num_prompts_per_step: 32
+  num_generations_per_prompt: 8
+  max_num_epochs: 100
+  max_num_steps: 200
+  normalize_rewards: true
+  use_leave_one_out_baseline: true
+  val_period: 25
+  val_at_start: true
+  max_val_samples: 100
+  val_batch_size: 100
+  overlong_filtering: false
+  advantage_clip_low: -20
+  advantage_clip_high: 20
+  use_dynamic_sampling: false
+  reward_shaping:
+    enabled: true
+    overlong_buffer_length: 1024
+    overlong_buffer_penalty: 1
+    max_response_length: ${policy.max_total_sequence_length}
+
+loss_fn:
+  reference_policy_kl_penalty: 0.0
+  ratio_clip_min: 0.2
+  ratio_clip_max: 0.28
+  use_importance_sampling_correction: true
+  truncated_importance_sampling_type: "tis"
+  truncated_importance_sampling_ratio: 5
+  truncated_importance_sampling_ratio_min: 0.2
+  sequence_level_importance_ratios: false
+  token_level_loss: true
+
+checkpointing:
+  enabled: true
+  checkpoint_dir: "${RUN_DIR}/rl/grpo_fin_${SIZE}"
+  metric_name: "val:accuracy"
+  higher_is_better: true
+  keep_top_k: 1000
+  save_period: 10
+  model_save_format: "safetensors"
+  save_consolidated: true
+
+policy:
+  model_name: "${MODEL_DIR}/Qwen3-${SIZE}-OT3"
+  tokenizer:
+    name: ${policy.model_name}
+  train_global_batch_size: 256
+  train_micro_batch_size: 1
+  logprob_batch_size: 1
+  max_total_sequence_length: 16384
+  precision: "bfloat16"
+  sequence_packing:
+    enabled: true
+    train_mb_tokens: 16384
+    logprob_mb_tokens: 16384
+  dtensor_cfg:
+    enabled: true
+    activation_checkpointing: true
+    tensor_parallel_size: 2
+    context_parallel_size: 1
+  optimizer:
+    name: "torch.optim.AdamW"
+    kwargs:
+      lr: 3.0e-6
+      weight_decay: 0.0
+      betas: [0.9, 0.999]
+      eps: 1e-8
+  scheduler:
+    - name: "torch.optim.lr_scheduler.LinearLR"
+      kwargs:
+        start_factor: 0.1
+        end_factor: 1.0
+        total_iters: 10
+    - name: "torch.optim.lr_scheduler.ConstantLR"
+      kwargs:
+        factor: 1.0
+        total_iters: 10000000000
+    - milestones: [10]
+  generation:
+    backend: "vllm"
+    max_new_tokens: ${policy.max_total_sequence_length}
+    temperature: 1.0
+    top_p: 1.0
+    top_k: null
+    vllm_cfg:
+      tensor_parallel_size: 1
+      gpu_memory_utilization: 0.6
+      max_model_len: ${policy.max_total_sequence_length}
+      enforce_eager: false
+
+data:
+  max_input_seq_length: ${policy.max_total_sequence_length}
+  shuffle: true
+  train:
+    dataset_name: ResponseDataset
+    data_path: "${DATA_DIR}/pools/fin_train.jsonl"
+    input_key: input
+    output_key: output
+    split_validation_size: 0
+    processor: "math_hf_data_processor"
+    env_name: "fin_numeric"
+  validation:
+    dataset_name: ResponseDataset
+    data_path: "${DATA_DIR}/pools/fin_val.jsonl"
+    input_key: input
+    output_key: output
+    processor: "math_hf_data_processor"
+    env_name: "fin_numeric"
+  default:
+    prompt_file: null
+    system_prompt_file: null
+
+env:
+  fin_numeric:
+    num_workers: 8
+
+logger:
+  log_dir: "${RUN_DIR}/rl/logs/grpo_fin_${SIZE}"
+  tensorboard_enabled: true
+
+cluster:
+  gpus_per_node: 8
+  num_nodes: 4

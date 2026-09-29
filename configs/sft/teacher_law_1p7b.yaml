@@ -1,0 +1,6 @@
+_base_: teacher_law_4b.yaml
+model:
+  base: ${MODEL_DIR}/Qwen3-1.7B-OT3
+train:
+  output: ${MODEL_DIR}/teacher-law-1p7b
+  batch_size: 64

@@ -1,0 +1,6 @@
+# MOPD from the reference model (1.7B).
+_base_: qwen3-4b_base.yaml
+model:
+  student: ${MODEL_DIR}/Qwen3-1.7B-OT3
+train:
+  output: ${RUN_DIR}/mopd/qwen3-1p7b_base

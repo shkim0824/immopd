@@ -1,0 +1,22 @@
+# Two-domain MOPD (Medical, IF) from the merge with coefficients (0.2, 0.8): 200 updates, 64 prompts per update.
+model:
+  student: ${MODEL_DIR}/merge-medif-r20
+teachers:
+  endpoints_file: ''
+data:
+  paths:
+    med: ${DATA_DIR}/pools/med_train.jsonl
+    if: ${DATA_DIR}/pools/if_train.jsonl
+  seed: 42
+distill:
+  a_max: 5.0
+train:
+  max_steps: 200
+  batch_size: 64
+  lr: 1.0e-6
+  max_completion_length: 16384
+  temperature: 1.0
+  top_p: 1.0
+  mask_truncated_completions: true
+  save_steps: 25
+  output: ${RUN_DIR}/mopd/2dom_medif_r20

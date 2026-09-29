@@ -1,0 +1,11 @@
+/models/
+/runs/
+/data/raw/
+/data/pools/
+/data/sft/
+/data/ot3_cache_len*/
+/analysis/out/
+__pycache__/
+*.pyc
+*.egg-info/
+.DS_Store

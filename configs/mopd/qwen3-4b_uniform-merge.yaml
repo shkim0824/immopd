@@ -1,0 +1,6 @@
+# MOPD from the uniform merge (coefficient 0.2 per teacher).
+_base_: qwen3-4b_base.yaml
+model:
+  student: ${MODEL_DIR}/merge-4b-uniform
+train:
+  output: ${RUN_DIR}/mopd/qwen3-4b_uniform-merge

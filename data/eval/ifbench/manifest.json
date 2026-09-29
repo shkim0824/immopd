@@ -1,0 +1,6 @@
+{
+  "n": 300,
+  "source": "allenai/IFBench_test",
+  "n_instruction_ids": 58,
+  "sha256": "d1a527dc3a0dcb413309d712e36a7576300e12bc5477a37fa25fbb8df25e1ec4"
+}

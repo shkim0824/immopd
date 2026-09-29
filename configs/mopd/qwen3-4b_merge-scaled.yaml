@@ -1,0 +1,6 @@
+# MOPD from the scaled merge, lambda = 2.1: Med 0.5, Law 0.3, Fin 0.2, IF 0.3, Tool 0.8.
+_base_: qwen3-4b_base.yaml
+model:
+  student: ${MODEL_DIR}/merge-4b-scaled
+train:
+  output: ${RUN_DIR}/mopd/qwen3-4b_merge-scaled

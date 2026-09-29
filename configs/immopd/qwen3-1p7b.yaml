@@ -1,0 +1,17 @@
+# IM-MOPD (1.7B): uniform merge initialization, corrections after updates 25, 50 and 75, gamma 0.4, delta 0.3.
+_base_: qwen3-4b.yaml
+model:
+  student: ${MODEL_DIR}/merge-1p7b-uniform
+train:
+  output: ${RUN_DIR}/immopd/qwen3-1p7b
+immopd:
+  gamma: 0.4
+  delta: 0.3
+  base: ${MODEL_DIR}/Qwen3-1.7B-OT3
+  teachers:
+    tau: ${MODEL_DIR}/teacher-tau-1p7b
+    med: ${MODEL_DIR}/teacher-med-1p7b
+    law: ${MODEL_DIR}/teacher-law-1p7b
+    fin: ${MODEL_DIR}/teacher-fin-1p7b
+    if: ${MODEL_DIR}/teacher-if-1p7b
+  refs: data/validation/refs_1p7b.json

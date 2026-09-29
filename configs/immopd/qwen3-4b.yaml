@@ -1,0 +1,23 @@
+# IM-MOPD (4B): uniform merge initialization, corrections after updates 25, 50 and 75, gamma 0.6, delta 0.3.
+_base_: ../mopd/qwen3-4b_base.yaml
+model:
+  student: ${MODEL_DIR}/merge-4b-uniform
+train:
+  output: ${RUN_DIR}/immopd/qwen3-4b
+immopd:
+  steps: [25, 50, 75]
+  gamma: 0.6
+  delta: 0.3
+  base: ${MODEL_DIR}/Qwen3-4B-OT3
+  teachers:
+    tau: ${MODEL_DIR}/teacher-tau-4b
+    med: ${MODEL_DIR}/teacher-med-4b
+    law: ${MODEL_DIR}/teacher-law-4b
+    fin: ${MODEL_DIR}/teacher-fin-4b
+    if: ${MODEL_DIR}/teacher-if-4b
+  refs: data/validation/refs_4b.json
+  validation:
+    pool: data/validation/pool.jsonl
+    tau2_tasks: data/validation/tau2_tasks.json
+    domains: [med, law, fin, if]
+    n_samples: 4

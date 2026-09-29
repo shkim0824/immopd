@@ -1,0 +1,9 @@
+# Reference model: Qwen3-1.7B-Base fine-tuned on OpenThoughts3-1.2M.
+_base_: ot3_4b.yaml
+model:
+  base: ${MODEL_DIR}/Qwen3-1.7B-Base
+data:
+  cache_dir: ${DATA_DIR}/ot3_cache_len18432
+  max_len: 18432
+train:
+  output: ${MODEL_DIR}/Qwen3-1.7B-OT3
